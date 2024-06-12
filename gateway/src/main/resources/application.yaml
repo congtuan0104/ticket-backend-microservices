@@ -1,0 +1,34 @@
+server:
+  port: 8080
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      default-filters:
+#        - AddRequestHeader=X-Request-Source, SpringCloudGateway
+##        - PrefixPath=/api/
+        - StripPrefix=1
+#      routes:
+#        - id: gallery-service
+#          uri: lb://gallery-service
+#          predicates:
+#            - Path=/gallery/**
+#          filters:
+#            - name: authenticationFilters
+#        - id: auth-service
+#          uri: lb://auth-service
+#          predicates:
+#            - Path=/auth/**
+#          filters:
+#            - name: authenticationFilters
+jwt:
+  secret: BvPHGM8C0ia4uOuxxqPD5DTbWC9F9TWvPStp3pb7ARo0oK2mJ3pd3YG4lxA9i8bj6OTbadwezxgeEByY
