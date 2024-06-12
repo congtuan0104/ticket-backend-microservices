@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.0</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-    <groupId>com.ticket</groupId>
-    <artifactId>microservices</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>microservices</name>
-    <description>microservices</description>
-    <properties>
-        <java.version>17</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
+<ticket:project xmlns:ticket="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <ticket:modelVersion>4.0.0</ticket:modelVersion>
+    <ticket:parent>
+        <ticket:groupId>org.springframework.boot</ticket:groupId>
+        <ticket:artifactId>spring-boot-starter-parent</ticket:artifactId>
+        <ticket:version>3.3.0</ticket:version>
+        <ticket:relativePath/> <!-- lookup parent from repository -->
+    </ticket:parent>
+    <ticket:groupId>com.ticket</ticket:groupId>
+    <ticket:artifactId>microservices</ticket:artifactId>
+    <ticket:version>0.0.1-SNAPSHOT</ticket:version>
+    <ticket:packaging>pom</ticket:packaging>
+    <ticket:name>microservices</ticket:name>
+    <ticket:description>microservices</ticket:description>
+    <ticket:properties>
+        <ticket:java.version>17</ticket:java.version>
+        <ticket:project.build.sourceEncoding>UTF-8</ticket:project.build.sourceEncoding>
+        <ticket:project.reporting.outputEncoding>UTF-8</ticket:project.reporting.outputEncoding>
+    </ticket:properties>
 
-    <modules>
-        <module>config-service</module>
-        <module>registry-service</module>
-        <module>gateway</module>
-        <module>auth-service</module>
-        <module>gallery-service</module>
-        <module>image-service</module>
-    </modules>
+    <ticket:modules>
+        <ticket:module>config-service</ticket:module>
+        <ticket:module>registry-service</ticket:module>
+        <ticket:module>gateway</ticket:module>
+        <ticket:module>auth-service</ticket:module>
+        <ticket:module>gallery-service</ticket:module>
+        <ticket:module>image-service</ticket:module>
+    </ticket:modules>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+    <ticket:build>
+        <ticket:plugins>
+            <ticket:plugin>
+                <ticket:groupId>org.springframework.boot</ticket:groupId>
+                <ticket:artifactId>spring-boot-maven-plugin</ticket:artifactId>
+            </ticket:plugin>
+        </ticket:plugins>
+    </ticket:build>
 
-</project>
+</ticket:project>
