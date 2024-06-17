@@ -1,6 +1,10 @@
 spring:
   application:
     name: gallery-service
+#  security:
+#    user:
+#      name: udpt
+#      password: udpt2024
 server:
   port: 8002
 eureka:
