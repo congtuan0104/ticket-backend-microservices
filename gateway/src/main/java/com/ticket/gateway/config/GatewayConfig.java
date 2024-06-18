@@ -19,13 +19,15 @@ public class GatewayConfig {
                 .route("gallery-service", r -> r.path("/api/gallery/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://gallery-service"))
-
                 .route("auth-service", r -> r.path("/api/auth/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://auth-service"))
                 .route("statistic-service", r -> r.path("/api/test/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://statistic-service"))
+                .route("demo-express-service", r -> r.path("/api/express/**")
+                        .filters(f -> f.filter(filter))
+                        .uri("lb://demo-express-service"))
                 .build();
     }
 }
