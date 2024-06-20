@@ -3,7 +3,10 @@ package com.ticket.ticket.controllers;
 import com.ticket.ticket.entities.Ticket;
 import com.ticket.ticket.services.TicketService;
 
-import com.ticket.ticket.entities.Ticket;
+import jakarta.ws.rs.GET;
+
+import com.ticket.ticket.entities.TicketOrder;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -26,8 +29,16 @@ public class TicketController {
         return "Ticket Service is running at port " + env.getProperty("local.server.port");
     }
 
+    @GetMapping(value = "/ticketOrder")
+    public String getTicketOrder()
+    {
+        return "Ticket Order path is here";
+    }
+
     @PostMapping
     public Ticket save(@RequestBody Ticket ticket) {
         return ticketService.save(ticket);
     }
 }
+
+
