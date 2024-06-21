@@ -2,6 +2,7 @@ package com.ticket.paymentservice.controllers;
 
 
 import com.ticket.paymentservice.dto.PaymentRequestDTO;
+import com.ticket.paymentservice.dto.PaymentResponse;
 import com.ticket.paymentservice.dto.VnpayDTO;
 import com.ticket.paymentservice.entitties.PaymentInfo;
 import com.ticket.paymentservice.services.PaymentService;
@@ -25,13 +26,23 @@ public class PaymentController {
     @Autowired
     private Environment env;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
     public String test() {
         return "this is payment Service";
     }
 
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    public ResponseEntity<String> testPayment(@RequestBody PaymentRequestDTO dto) {
+        try {
+            String paymentUrl = paymentService.vnpayUrl(dto);
+            return new ResponseEntity<>(paymentUrl, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<String> createPayment(@RequestBody PaymentInfo paymentInfo) {
+    public ResponseEntity<PaymentResponse> createPayment(@RequestBody PaymentInfo paymentInfo) {
         try {
             final PaymentInfo savedPaymentInfo = paymentService.save(paymentInfo);
             final PaymentRequestDTO dto
@@ -42,7 +53,8 @@ public class PaymentController {
                     .paymentAmount(savedPaymentInfo.getPaymentAmount())
                     .build();
             String paymentUrl = paymentService.vnpayUrl(dto);
-            return new ResponseEntity<>(paymentUrl, HttpStatus.CREATED);
+            PaymentResponse response = new PaymentResponse(savedPaymentInfo, paymentUrl);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
