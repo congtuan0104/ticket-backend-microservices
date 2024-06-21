@@ -1,8 +1,6 @@
 package com.ticket.auth.services;
 
-import com.ticket.auth.entities.AuthRequest;
-import com.ticket.auth.entities.AuthResponse;
-import com.ticket.auth.entities.UserVO;
+import com.ticket.auth.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
@@ -21,17 +19,37 @@ public class AuthService {
         this.jwt = jwt;
     }
 
-    public AuthResponse register(AuthRequest authRequest) {
+    public RegisterResponse register(RegisterRequest registerRequest) {
         //do validation if user already exists
-        authRequest.setPassword(BCrypt.hashpw(authRequest.getPassword(), BCrypt.gensalt()));
+        UserVO user = restTemplate.getForObject("http://user-service/users?email=" + registerRequest.getEmail(), UserVO.class);
+        Assert.isNull(user, "Tài khoản đã tồn tại");
+
+        registerRequest.setPassword(BCrypt.hashpw(registerRequest.getPassword(), BCrypt.gensalt()));
 //
-        UserVO userVO = restTemplate.postForObject("http://user-service/users", authRequest, UserVO.class);
-        Assert.notNull(userVO, "Failed to register user. Please try again later");
+        UserVO userVO = restTemplate.postForObject("http://user-service/users", registerRequest, UserVO.class);
+        Assert.notNull(userVO, "Tạo tài khoản thất bại");
 
-        String accessToken = jwt.generate(authRequest.getEmail(), "ACCESS");
-        String refreshToken = jwt.generate(authRequest.getEmail(), "REFRESH");
+        String accessToken = jwt.generate(registerRequest.getEmail(), "ACCESS");
+        String refreshToken = jwt.generate(registerRequest.getEmail(), "REFRESH");
 
-        return new AuthResponse(accessToken, refreshToken);
+        return new RegisterResponse(accessToken, refreshToken, userVO);
 
     }
+
+    public LoginResponse login(LoginRequest loginRequest) {
+        // kiểm tra user có tồn tại không (api user-service/users?email=...)
+        UserVO userVO = restTemplate.getForObject("http://user-service/users?email=" + loginRequest.getEmail(), UserVO.class);
+        Assert.notNull(userVO, "Tài khoản không tồn tại");
+
+//        // kiểm tra password có đúng không
+        if (!BCrypt.checkpw(loginRequest.getPassword(), userVO.getPassword())) {
+            throw new RuntimeException("Mật khẩu không chính xác");
+        }
+
+        String accessToken = jwt.generate(loginRequest.getEmail(), "ACCESS");
+        String refreshToken = jwt.generate(loginRequest.getEmail(), "REFRESH");
+
+        return new LoginResponse(accessToken, refreshToken, userVO);
+    }
+
 }

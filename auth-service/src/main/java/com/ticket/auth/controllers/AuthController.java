@@ -1,7 +1,9 @@
 package com.ticket.auth.controllers;
 
-import com.ticket.auth.entities.AuthRequest;
-import com.ticket.auth.entities.AuthResponse;
+import com.ticket.auth.entities.RegisterRequest;
+import com.ticket.auth.entities.RegisterResponse;
+import com.ticket.auth.entities.LoginRequest;
+import com.ticket.auth.entities.LoginResponse;
 import com.ticket.auth.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -31,8 +33,13 @@ public class AuthController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody AuthRequest authRequest) {
-        return ResponseEntity.ok(authService.register(authRequest));
+    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest registerRequest) {
+        return ResponseEntity.ok(authService.register(registerRequest));
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(authService.login(loginRequest));
     }
 
 }

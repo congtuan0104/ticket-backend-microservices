@@ -7,6 +7,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
@@ -18,12 +20,16 @@ public class UserController {
     private Environment env;
 
     @GetMapping
-    public String home() {
-        return "User Service running at port " + env.getProperty("local.server.port");
+    public User findUser(@RequestParam(value = "email") String email) {
+        // find user by email
+        Optional<User> user = userService.findUserByEmail(email);
+        return user.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build()).getBody();
+
     }
 
     @PostMapping
-    public User save(@RequestBody User user) {
+    public User saveUser(@RequestBody User user) {
         return userService.save(user);
     }
 

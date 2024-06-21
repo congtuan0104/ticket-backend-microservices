@@ -8,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,11 +19,10 @@ public class User {
 
     @JsonSerialize(using = ToStringSerializer.class)
     private ObjectId id;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String email;
-    private String departmentId;
     private String password;
+    private String phoneNumber;
     private String role;
 
 }
