@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
@@ -19,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 public class Ticket {
 
     @JsonSerialize(using = ToStringSerializer.class)
+    @Id
     private ObjectId ticketId;
     private ObjectId orderId;
     private ObjectId eventTicketId;
