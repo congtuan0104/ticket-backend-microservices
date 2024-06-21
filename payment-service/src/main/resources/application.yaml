@@ -1,0 +1,21 @@
+server:
+  port: 8005
+
+spring:
+  application:
+    name: payment-service
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
+jwt:
+  secret: BvPHGM8C0ia4uOuxxqPD5DTbWC9F9TWvPStp3pb7ARo0oK2mJ3pd3YG4lxA9i8bj6OTbadwezxgeEByY
+  expiration: 20400
+
+
+vnpay:
+  terminalId: 1VZJARYJ
+  secret: MW5MTFN62ZPPNEBPK5RQO8I0F9ZNS9HJ
+  returnUrl: https://localhost:8005/api/payment/return
+  vnpayUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
