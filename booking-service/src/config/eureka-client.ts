@@ -2,7 +2,7 @@ import { Eureka } from "eureka-js-client";
 
 export const eurekaClient = new Eureka({
   instance: {
-    app: "demo-express-service",
+    app: "booking-service",
     hostName: "localhost",
     ipAddr: "127.0.0.1",
     statusPageUrl: `http://localhost:8008`,
@@ -10,7 +10,7 @@ export const eurekaClient = new Eureka({
       $: 8008,
       "@enabled": true,
     },
-    vipAddress: "demo-express-service",
+    vipAddress: "booking-service",
     dataCenterInfo: {
       "@class": "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
       name: "MyOwn",
