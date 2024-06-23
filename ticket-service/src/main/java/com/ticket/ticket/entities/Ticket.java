@@ -22,9 +22,9 @@ public class Ticket {
     @JsonSerialize(using = ToStringSerializer.class)
     @Id
     private ObjectId ticketId;
-    private ObjectId orderId;
-    private ObjectId eventTicketId;
-    private ObjectId promotionCode;
+    private String orderId;
+    private String eventTicketId;
+    private String promotionCode;
     private int quantity;
     private float totalMoney;
     private String status;
