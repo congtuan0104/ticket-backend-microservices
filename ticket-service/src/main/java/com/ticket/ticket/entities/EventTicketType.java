@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Date;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
@@ -17,14 +18,18 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 @NoArgsConstructor
 @Builder
 @Data
-@Document(collection = "ticketOrder")
+@Document(collection = "EventTicketType")
 
+public class EventTicketType {
 
-public class TicketOrder {
     @JsonSerialize(using = ToStringSerializer.class)
-    private ObjectId orderId;
-    private Date timeOrder;
-    private int totalAmount;
-    private String status;
-    private String totalDiscount;
+    @Id
+    private ObjectId eventTicketId;
+    private String ticketName;
+    private String description;
+    private float price;
+    private String eventId;
+    private int inStock;
+    private Date startDate;
+    private Date endDate;
 }

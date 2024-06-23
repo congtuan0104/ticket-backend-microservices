@@ -7,6 +7,7 @@ import com.ticket.ticket.services.TicketService;
 import jakarta.ws.rs.GET;
 
 import com.ticket.ticket.entities.TicketOrder;
+import com.ticket.ticket.repositories.TicketOrderRepository;
 import com.ticket.ticket.repositories.TicketRepository;
 
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,8 @@ public class TicketController {
 
     @Autowired
     private TicketRepository ticketRepository;
+
+
 
     @GetMapping
     public String home()
@@ -70,12 +73,6 @@ public class TicketController {
         catch (Exception e){
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    @GetMapping(value = "/ticketOrder")
-    public String getTicketOrder()
-    {
-        return "Ticket Order path is here";
     }
 
     @PostMapping
@@ -116,6 +113,76 @@ public class TicketController {
 
     }
 
+    //TicketOrder
+    
+    @Autowired
+    private TicketOrderRepository ticketOrderRepository;
+
+    @GetMapping(value = "/ticketOrder")
+    public ResponseEntity<List<TicketOrder>> getAllTicketOrder()
+    {
+        try{
+            List<TicketOrder> ticketOrders= new ArrayList<TicketOrder>();
+
+            ticketOrderRepository.findAll().forEach(ticketOrders::add);
+          
+            if (ticketOrders.isEmpty())
+            {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(ticketOrders, HttpStatus.OK);
+        }
+        catch (Exception e){
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/ticketOrder/{id}")
+    public ResponseEntity<TicketOrder> getTicketOrderByid(@PathVariable("id") String orderId)
+    {
+        java.util.Optional<TicketOrder> ticketOrderData = ticketOrderRepository.findById(orderId);
+        if (ticketOrderData.isPresent())
+        {
+            return new ResponseEntity<>(ticketOrderData.get(), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping(value= "/ticketOrder")
+    public ResponseEntity<TicketOrder> setTicketOrder(@RequestBody TicketOrder ticketOrder)
+    {
+        try
+        {
+            TicketOrder _ticketOrder = ticketOrderRepository.save(ticketOrder);
+            return new ResponseEntity<>(_ticketOrder, HttpStatus.CREATED);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "/ticketOrder/{id}")
+    public  ResponseEntity<TicketOrder> updateTicketOrder(@PathVariable("id") String orderId, @RequestBody TicketOrder ticketOrder)
+    {
+        java.util.Optional<TicketOrder> ticketOrderData = ticketOrderRepository.findById(orderId);
+        if (ticketOrderData.isPresent())
+        {
+            TicketOrder _ticketOrder = ticketOrderData.get();
+            _ticketOrder.setTimeOrder(ticketOrder.getTimeOrder());
+            _ticketOrder.setTotalAmount(ticketOrder.getTotalAmount());
+            _ticketOrder.setTotalDiscount(ticketOrder.getTotalDiscount());
+            _ticketOrder.setStatus(ticketOrder.getStatus());
+            return new ResponseEntity<>(ticketOrderRepository.save(_ticketOrder), HttpStatus.OK);
+
+        }
+        else
+        {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
 
 
