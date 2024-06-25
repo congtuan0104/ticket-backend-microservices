@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class PaymentRequestDTO {
     private String paymentId;
     private String paymentMethod;
-    private Integer paymentAmount;
+    private Number paymentAmount;
     private String content;
-    private Number orderId;
+    private String orderId;
 }

@@ -1,9 +1,13 @@
 package com.ticket.payment.services;
 
+import com.ticket.payment.dto.CreatePromotionRequest;
 import com.ticket.payment.dto.PaymentRequestDTO;
 import com.ticket.payment.dto.VnpayDTO;
 import com.ticket.payment.entitties.PaymentInfo;
+import com.ticket.payment.entitties.Promotion;
 import com.ticket.payment.repositories.PaymentRepository;
+import com.ticket.payment.repositories.PromotionRepository;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -12,6 +16,8 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -68,4 +74,5 @@ public class PaymentService {
     public void deleteById(String id) {
         this.paymentRepository.deleteById(id);
     }
+
 }

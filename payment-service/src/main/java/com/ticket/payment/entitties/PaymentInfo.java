@@ -28,13 +28,13 @@ public class PaymentInfo {
 
     private String paymentMethod;
     private String content;
-    private Integer paymentAmount;
+    private Number paymentAmount;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
     private LocalDateTime transactionTime = LocalDateTime.now();
 
     private String paymentAccount;
-    private Integer status;
-    private Number orderId;
+    private String status;
+    private String orderId;
 }

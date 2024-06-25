@@ -1,16 +1,20 @@
 package com.ticket.payment.controllers;
 
 
+import com.ticket.payment.dto.CreatePromotionRequest;
 import com.ticket.payment.dto.PaymentRequestDTO;
 import com.ticket.payment.dto.PaymentResponse;
 import com.ticket.payment.entitties.PaymentInfo;
+import com.ticket.payment.entitties.Promotion;
 import com.ticket.payment.services.PaymentService;
+import com.ticket.payment.services.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,6 +24,9 @@ public class PaymentController {
 
     @Autowired
     private PaymentService paymentService;
+
+    @Autowired
+    private PromotionService promotionService;
 
     @Autowired
     private Environment env;
@@ -56,7 +63,6 @@ public class PaymentController {
             PaymentResponse response = new PaymentResponse(savedPaymentInfo, paymentUrl);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
@@ -82,7 +88,6 @@ public class PaymentController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
@@ -113,6 +118,49 @@ public class PaymentController {
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @RequestMapping(value = "/promotion/generate", method = RequestMethod.POST)
+    public ResponseEntity<List<Promotion>> generatePromotion(
+            @RequestBody CreatePromotionRequest request
+            ) {
+        try {
+            return new ResponseEntity<>(this.promotionService.generatePromotion(request), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping(value = "/promotion/{id}")
+    public ResponseEntity<Promotion> updatePromotion(@PathVariable("id") String id, @RequestBody Promotion promotion) {
+        try {
+            Optional<Promotion> foundPromotion = this.promotionService.findById(id);
+            if(foundPromotion.isPresent()) {
+                Promotion updatedData = foundPromotion.get();
+                updatedData.setDiscount(promotion.getDiscount());
+                updatedData.setDiscountType(promotion.getDiscountType());
+                updatedData.setEventId(promotion.getEventId());
+                updatedData.setExpiredDate(promotion.getExpiredDate());
+                updatedData.setStatus(promotion.getStatus());
+                return new ResponseEntity<>(this.promotionService.save(updatedData), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping(value = "/promotion/{id}")
+    public ResponseEntity<Promotion> getPromotionbyId(@PathVariable("id") String id){
+        try {
+            Optional<Promotion> promotion = this.promotionService.findById(id);
+            if(promotion.isPresent()) {
+                return new ResponseEntity<>(promotion.get(), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
