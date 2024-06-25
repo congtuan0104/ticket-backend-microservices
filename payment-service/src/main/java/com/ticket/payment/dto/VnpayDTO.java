@@ -1,4 +1,4 @@
-package com.ticket.paymentservice.dto;
+package com.ticket.payment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

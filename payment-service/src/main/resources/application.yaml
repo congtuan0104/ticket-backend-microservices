@@ -4,6 +4,14 @@ server:
 spring:
   application:
     name: payment-service
+  data:
+    mongodb:
+      url: mongodb+srv://nsonbao0601:alNlxNVoma7mgxKo@cluster0.hknjigi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+#      username: nsonbao0601
+#      password: alNlxNVoma7mgxKo
+#      host: cluster0.hknjigi.mongodb.net
+      database: ticket
+
 
 eureka:
   client:

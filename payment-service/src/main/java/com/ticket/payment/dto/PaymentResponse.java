@@ -1,6 +1,6 @@
-package com.ticket.paymentservice.dto;
+package com.ticket.payment.dto;
 
-import com.ticket.paymentservice.entitties.PaymentInfo;
+import com.ticket.payment.entitties.PaymentInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class PaymentResponse {
-    private PaymentInfo info;
+    private PaymentInfo paymentInfo;
     private String paymentUrl;
 }

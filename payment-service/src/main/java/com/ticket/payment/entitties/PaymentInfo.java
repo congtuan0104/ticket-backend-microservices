@@ -1,4 +1,4 @@
-package com.ticket.paymentservice.entitties;
+package com.ticket.payment.entitties;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import jakarta.persistence.*;
@@ -7,27 +7,32 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@Entity
+
+@Document(collection = "paymentInfo")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentInfo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Number paymentId;
+
+
+    @MongoId
+    private String paymentId;
+
     private String paymentMethod;
     private String content;
     private Integer paymentAmount;
-    private Integer paymentInfo;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    private LocalDateTime transactionTime;
+    private LocalDateTime transactionTime = LocalDateTime.now();
 
     private String paymentAccount;
     private Integer status;

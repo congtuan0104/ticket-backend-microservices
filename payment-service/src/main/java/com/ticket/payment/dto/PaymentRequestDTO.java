@@ -1,4 +1,4 @@
-package com.ticket.paymentservice.dto;
+package com.ticket.payment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class PaymentRequestDTO {
-    private Number paymentId;
+    private String paymentId;
     private String paymentMethod;
     private Integer paymentAmount;
     private String content;
