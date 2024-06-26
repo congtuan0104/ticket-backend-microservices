@@ -28,6 +28,9 @@ public class GatewayConfig {
                 .route("demo-express-service", r -> r.path("/api/express/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://demo-express-service"))
+                .route("ticket-service", r-> r.path("/api/**")
+                        .filters(f -> f.filter(filter))
+                        .uri("lb://ticket-service"))
                 .build();
     }
 }

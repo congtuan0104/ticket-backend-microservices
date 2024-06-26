@@ -10,7 +10,7 @@ import com.ticket.ticket.entities.EventTicketType;
 
 @Repository
 public interface EventTicketTypeRepository extends MongoRepository<EventTicketType, String> {
-    List<EventTicketType> findByTicketNameContaining(String ticketName);
+    List<EventTicketType> findByEventIdContaining(String eventId);
 }
 
 

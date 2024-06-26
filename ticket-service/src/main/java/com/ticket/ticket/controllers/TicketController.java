@@ -1,12 +1,15 @@
 package com.ticket.ticket.controllers;
 
 import com.google.common.base.Optional;
+import com.ticket.ticket.entities.EventTicketType;
 import com.ticket.ticket.entities.Ticket;
 import com.ticket.ticket.services.TicketService;
 
+import jakarta.websocket.server.PathParam;
 import jakarta.ws.rs.GET;
 
 import com.ticket.ticket.entities.TicketOrder;
+import com.ticket.ticket.repositories.EventTicketTypeRepository;
 import com.ticket.ticket.repositories.TicketOrderRepository;
 import com.ticket.ticket.repositories.TicketRepository;
 
@@ -32,9 +35,11 @@ public class TicketController {
     @Autowired
     private Environment env;
 
+
     @Autowired
     private TicketRepository ticketRepository;
 
+  
 
 
     @GetMapping
@@ -183,6 +188,104 @@ public class TicketController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping(value = "/eventTicketType/{id}")
+    public ResponseEntity<HttpStatus> DeleteTicketOrderById(@PathVariable("id") String ticketOrderId)
+    {
+        try {
+            ticketOrderRepository.deleteById(ticketOrderId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //Event Ticket Type
+
+    @Autowired
+    private EventTicketTypeRepository eventTicketTypeRepository;
+
+    @GetMapping(value = "/eventTicketType")
+    public ResponseEntity<List<EventTicketType>> getAllEventTicketType()
+    {
+        List<EventTicketType> eventTicketTypes = new ArrayList<EventTicketType>();
+        try {
+            eventTicketTypeRepository.findAll().forEach(eventTicketTypes::add);
+
+            if (eventTicketTypes.isEmpty())
+            {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            else
+            {
+                return new ResponseEntity<>(eventTicketTypes, HttpStatus.OK);
+            }
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @GetMapping(value = "/eventTicketType/{id}")
+    public ResponseEntity<EventTicketType> getEventTicketTypeById(@PathVariable("id") String eventTicketId)
+    {
+        java.util.Optional<EventTicketType> eventTicketTypeData = eventTicketTypeRepository.findById(eventTicketId);
+        if (eventTicketTypeData.isPresent())
+        {
+            return new ResponseEntity<>(eventTicketTypeData.get(), HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/eventTicketType")
+    public ResponseEntity<List<EventTicketType>> getEventTicketTypeByEventId(String eventId)
+    {
+        List<EventTicketType> eventTicketTypes = new ArrayList<EventTicketType>();
+        try {
+            eventTicketTypeRepository.findByEventIdContaining(eventId).forEach(eventTicketTypes::add);
+
+            if (eventTicketTypes.isEmpty())
+            {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            else
+            {
+                return new ResponseEntity<>(eventTicketTypes, HttpStatus.OK);
+            }
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+    @PostMapping(value = "/eventTicketType")
+    public ResponseEntity<EventTicketType> createEventTicketType(@RequestBody EventTicketType eventTicketType)
+    {
+        try
+        {
+            EventTicketType _eventTicketType = eventTicketTypeRepository.save(eventTicketType);
+            return new ResponseEntity<>(_eventTicketType, HttpStatus.CREATED);
+        }
+        catch (Exception e)
+        {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping(value = "/eventTicketType/{id}")
+    public ResponseEntity<HttpStatus> deleteEventTicketTypeById(@PathVariable("id") String eventTicketId)
+    {
+        try {
+            eventTicketTypeRepository.deleteById(eventTicketId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
-
-
