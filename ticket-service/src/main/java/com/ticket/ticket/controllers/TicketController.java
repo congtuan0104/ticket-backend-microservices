@@ -26,7 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/ticket")
 
 public class TicketController {
     @Autowired
@@ -189,7 +189,7 @@ public class TicketController {
         }
     }
 
-    @DeleteMapping(value = "/eventTicketType/{id}")
+    @DeleteMapping(value = "/ticketOrder/{id}")
     public ResponseEntity<HttpStatus> DeleteTicketOrderById(@PathVariable("id") String ticketOrderId)
     {
         try {
@@ -241,12 +241,12 @@ public class TicketController {
         }
     }
 
-    @GetMapping(value = "/eventTicketType")
+    @GetMapping(value = "/eventTicketType/eventId")
     public ResponseEntity<List<EventTicketType>> getEventTicketTypeByEventId(String eventId)
     {
-        List<EventTicketType> eventTicketTypes = new ArrayList<EventTicketType>();
+        
         try {
-            eventTicketTypeRepository.findByEventIdContaining(eventId).forEach(eventTicketTypes::add);
+            List<EventTicketType> eventTicketTypes = eventTicketTypeRepository.findByEventIdContaining(eventId);
 
             if (eventTicketTypes.isEmpty())
             {

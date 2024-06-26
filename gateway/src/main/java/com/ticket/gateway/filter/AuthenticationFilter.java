@@ -29,7 +29,8 @@ public class AuthenticationFilter implements GatewayFilter {
             "/api/gallery",
 //            "/api/test",
             "/api/hello",
-            "/api/express"
+            "/api/express",
+            "/api/ticket"
     );
 
     @Autowired
