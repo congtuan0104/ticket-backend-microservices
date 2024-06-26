@@ -32,7 +32,7 @@ public class PromotionService {
                     .discount(request.getDiscount())
                     .discountType(request.getDiscountType())
                     .expiredDate(request.getExpiredDate())
-                    .Status("active")
+                    .status("active")
                     .build();
             promotionList.add(promotion);
         }
@@ -50,4 +50,13 @@ public class PromotionService {
     public void deleteById(String id) {
         this.promotionRepository.deleteById(id);
     }
+
+    public List<Promotion> getAllPromotion() {
+        return this.promotionRepository.findAll();
+    }
+
+    public List<Promotion> getAllPromotionByStatus(String status) {
+        return this.promotionRepository.findAllByStatus(status);
+    }
 }
+

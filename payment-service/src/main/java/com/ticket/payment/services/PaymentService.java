@@ -64,6 +64,7 @@ public class PaymentService {
     }
 
     public PaymentInfo save(PaymentInfo paymentInfo) {
+        paymentInfo.setStatus("pending");
         return this.paymentRepository.save(paymentInfo);
     }
 
@@ -73,6 +74,14 @@ public class PaymentService {
 
     public void deleteById(String id) {
         this.paymentRepository.deleteById(id);
+    }
+
+    public List<PaymentInfo> getAllPayment() {
+        return this.paymentRepository.findAll();
+    }
+
+    public List<PaymentInfo> getAllPaymentByStatus(String status) {
+        return this.paymentRepository.findAllByStatus(status);
     }
 
 }

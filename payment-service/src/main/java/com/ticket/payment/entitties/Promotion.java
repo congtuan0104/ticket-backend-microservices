@@ -28,5 +28,5 @@ public class Promotion {
     private Double discount;
     private String discountType;
     private Date expiredDate;
-    private String Status;
+    private String status;
 }

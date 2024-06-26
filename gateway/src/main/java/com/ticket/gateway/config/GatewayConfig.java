@@ -34,6 +34,9 @@ public class GatewayConfig {
                 .route("payment-service", r -> r.path("/api/payment/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://payment-service"))
+                .route("payment-service", r -> r.path("/api/promotion/**")
+                        .filters(f -> f.filter(filter))
+                        .uri("lb://payment-service"))
                 .build();
     }
 }

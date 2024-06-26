@@ -42,7 +42,7 @@ public class PaymentController {
             String paymentUrl = paymentService.vnpayUrl(dto);
             return new ResponseEntity<>(paymentUrl, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -60,10 +60,21 @@ public class PaymentController {
                     .paymentAmount(savedPaymentInfo.getPaymentAmount())
                     .build();
             String paymentUrl = paymentService.vnpayUrl(dto);
-            PaymentResponse response = new PaymentResponse(savedPaymentInfo, paymentUrl);
+            PaymentResponse response
+                    = PaymentResponse.builder()
+                    .paymentUrl(paymentUrl)
+                    .orderId(savedPaymentInfo.getPaymentId())
+                    .paymentId(savedPaymentInfo.getPaymentId())
+                    .paymentMethod(savedPaymentInfo.getPaymentMethod())
+                    .content(savedPaymentInfo.getContent())
+                    .paymentAmount(savedPaymentInfo.getPaymentAmount())
+                    .transactionTime(savedPaymentInfo.getTransactionTime())
+                    .status(savedPaymentInfo.getStatus())
+                    .paymentAccount(savedPaymentInfo.getPaymentAccount())
+                    .build();
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -88,7 +99,7 @@ public class PaymentController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -104,7 +115,7 @@ public class PaymentController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -119,7 +130,7 @@ public class PaymentController {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -130,7 +141,7 @@ public class PaymentController {
         try {
             return new ResponseEntity<>(this.promotionService.generatePromotion(request), HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -149,12 +160,12 @@ public class PaymentController {
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping(value = "/promotion/{id}")
-    public ResponseEntity<Promotion> getPromotionbyId(@PathVariable("id") String id){
+    public ResponseEntity<Promotion> getPromotionById(@PathVariable("id") String id){
         try {
             Optional<Promotion> promotion = this.promotionService.findById(id);
             if(promotion.isPresent()) {
@@ -162,7 +173,34 @@ public class PaymentController {
             }
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @RequestMapping(value = "/payment", method = RequestMethod.GET)
+    public ResponseEntity<List<PaymentInfo>> findAllPayment() {
+        try {
+            List<PaymentInfo> payments = this.paymentService.getAllPayment();
+            if(payments.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(payments, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @RequestMapping(value = "/promotion", method = RequestMethod.GET)
+    public ResponseEntity<List<Promotion>> findAllPromotion() {
+        try {
+            List<Promotion> promotions = this.promotionService.getAllPromotion();
+            if(promotions.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(promotions, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
 }
