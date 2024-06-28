@@ -28,3 +28,5 @@ hs_err_pid*
 
 # OS Specific
 .DS_Store
+notification-service/src/main/resources/firebase.json
+notification-service/src/main/resources/firebase.json

@@ -1,6 +1,6 @@
-package com.ticket.paymentservice.services;
+package com.ticket.payment.services;
 
-import com.ticket.paymentservice.dto.VnpayDTO;
+import com.ticket.payment.dto.VnpayDTO;
 import org.bouncycastle.crypto.macs.HMac;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
