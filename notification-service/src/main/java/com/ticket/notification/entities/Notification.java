@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @Builder
 @Document(collection = "notification")
 public class Notification {
-    @JsonSerialize(using =  ToStringSerializer.class)
     @Id
     private ObjectId notificationId;
     private String Content;

@@ -202,5 +202,20 @@ public class PaymentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
+
+    @RequestMapping(value = "/promotion/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<HttpStatus> deletePromotionById(@PathVariable("id") String id) {
+        try {
+            Optional<Promotion> promotion = this.promotionService.findById(id);
+            if (promotion.isPresent()) {
+                this.promotionService.deleteById(id);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

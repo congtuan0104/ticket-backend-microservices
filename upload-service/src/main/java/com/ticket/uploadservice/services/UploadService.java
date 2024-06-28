@@ -22,6 +22,7 @@ public class UploadService {
             fos.write(multipartFile.getBytes());
             fos.close();
         }
+
         return tempFile;
     }
 
