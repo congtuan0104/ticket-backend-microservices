@@ -6,14 +6,17 @@ import com.ticket.payment.dto.PaymentRequestDTO;
 import com.ticket.payment.dto.PaymentResponse;
 import com.ticket.payment.entitties.PaymentInfo;
 import com.ticket.payment.entitties.Promotion;
+import com.ticket.payment.repositories.PaymentRepository;
 import com.ticket.payment.services.PaymentService;
 import com.ticket.payment.services.PromotionService;
+import jakarta.ws.rs.QueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,6 +30,9 @@ public class PaymentController {
 
     @Autowired
     private PromotionService promotionService;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
 
     @Autowired
     private Environment env;
@@ -178,14 +184,27 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/payment", method = RequestMethod.GET)
-    public ResponseEntity<List<PaymentInfo>> findAllPayment() {
+    public ResponseEntity<List<PaymentInfo>> findAllPayment(
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String paymentMethod,
+            @RequestParam(required = false) String paymentAccount,
+            @RequestParam(required = false) LocalDateTime transactionTimeFrom,
+            @RequestParam(required = false) LocalDateTime transactionTimeTo
+    ) {
         try {
-            List<PaymentInfo> payments = this.paymentService.getAllPayment();
+            List<PaymentInfo> payments =
+                    this.paymentService.searchPaymentInfo(
+                            status,
+                            paymentMethod,
+                            paymentAccount,
+                            transactionTimeFrom,
+                            transactionTimeTo);
             if(payments.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(payments, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

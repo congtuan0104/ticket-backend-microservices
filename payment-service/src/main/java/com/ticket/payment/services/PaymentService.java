@@ -80,8 +80,14 @@ public class PaymentService {
         return this.paymentRepository.findAll();
     }
 
-    public List<PaymentInfo> getAllPaymentByStatus(String status) {
-        return this.paymentRepository.findAllByStatus(status);
+
+    public List<PaymentInfo> searchPaymentInfo(
+            String status,
+            String paymentMethod,
+            String paymentAccount,
+            LocalDateTime transactionTimeFrom,
+            LocalDateTime transactionTimeTo) {
+        return this.paymentRepository.findPayment(status, paymentMethod, paymentAccount, transactionTimeFrom, transactionTimeTo);
     }
 
 }
