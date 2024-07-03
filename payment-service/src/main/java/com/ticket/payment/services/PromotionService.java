@@ -55,8 +55,12 @@ public class PromotionService {
         return this.promotionRepository.findAll();
     }
 
-    public List<Promotion> getAllPromotionByStatus(String status) {
-        return this.promotionRepository.findAllByStatus(status);
+    public List<Promotion> getPromotionByStatus(String status) {
+        return this.promotionRepository.findByStatus(status);
+    }
+
+    public List<Promotion> getPromotionByEventId(String eventId) {
+        return this.promotionRepository.findByEventId(eventId);
     }
 }
 

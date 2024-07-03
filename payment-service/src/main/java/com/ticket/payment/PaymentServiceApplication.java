@@ -55,13 +55,13 @@ class MongoConfig extends AbstractMongoClientConfiguration {
 
     @Override
     protected String getDatabaseName() {
-        return "ticket";
+        return env.getProperty("spring.data.mongodb.database");
     }
 
     @Bean
     @Override
     public MongoClient mongoClient() {
-        return MongoClients.create("mongodb+srv://nsonbao0601:alNlxNVoma7mgxKo@cluster0.hknjigi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+        return MongoClients.create(env.getProperty("spring.data.mongodb.url"));
     }
 
 }

@@ -211,9 +211,17 @@ public class PaymentController {
     }
 
     @RequestMapping(value = "/promotion", method = RequestMethod.GET)
-    public ResponseEntity<List<Promotion>> findAllPromotion() {
+    public ResponseEntity<List<Promotion>> findAllPromotion(
+            @RequestParam(required = false) String eventId,
+            @RequestParam(required = false) String status
+    ) {
         try {
             List<Promotion> promotions = this.promotionService.getAllPromotion();
+            if (status != null && !status.isEmpty()) {
+                promotions = this.promotionService.getPromotionByStatus(status);
+            } else if(eventId != null && !eventId.isEmpty()) {
+                promotions= this.promotionService.getPromotionByEventId(eventId);
+            }
             if(promotions.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
@@ -237,5 +245,7 @@ public class PaymentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 }
