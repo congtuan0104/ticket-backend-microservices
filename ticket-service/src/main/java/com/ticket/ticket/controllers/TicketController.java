@@ -1,12 +1,12 @@
 package com.ticket.ticket.controllers;
 
-import com.google.common.base.Optional;
 import com.ticket.ticket.entities.EventTicketType;
 import com.ticket.ticket.entities.Ticket;
 import com.ticket.ticket.services.TicketService;
 
 import jakarta.websocket.server.PathParam;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.QueryParam;
 
 import com.ticket.ticket.entities.TicketOrder;
 import com.ticket.ticket.repositories.EventTicketTypeRepository;
@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatusCode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class TicketController {
     @GetMapping(value = "/tickets/{id}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable("id") String id)
     {
-        java.util.Optional<Ticket> ticketData = ticketRepository.findById(id);
+        Optional<Ticket> ticketData = ticketRepository.findById(id);
         if (ticketData.isPresent())
         {
             return new ResponseEntity<>(ticketData.get(), HttpStatus.OK);
@@ -99,7 +100,7 @@ public class TicketController {
     @PutMapping("/ticket/{id}")
     public ResponseEntity<Ticket> updateTicket(@PathVariable("id") String id, @RequestBody Ticket ticket)
     {
-        java.util.Optional<Ticket> ticketData = ticketRepository.findById(id);
+        Optional<Ticket> ticketData = ticketRepository.findById(id);
         if (ticketData.isPresent())
         {
             Ticket _ticket = ticketData.get();
@@ -145,7 +146,7 @@ public class TicketController {
     @GetMapping(value = "/ticketOrder/{id}")
     public ResponseEntity<TicketOrder> getTicketOrderByid(@PathVariable("id") String orderId)
     {
-        java.util.Optional<TicketOrder> ticketOrderData = ticketOrderRepository.findById(orderId);
+        Optional<TicketOrder> ticketOrderData = ticketOrderRepository.findById(orderId);
         if (ticketOrderData.isPresent())
         {
             return new ResponseEntity<>(ticketOrderData.get(), HttpStatus.OK);
@@ -172,7 +173,7 @@ public class TicketController {
     @PutMapping(value = "/ticketOrder/{id}")
     public  ResponseEntity<TicketOrder> updateTicketOrder(@PathVariable("id") String orderId, @RequestBody TicketOrder ticketOrder)
     {
-        java.util.Optional<TicketOrder> ticketOrderData = ticketOrderRepository.findById(orderId);
+        Optional<TicketOrder> ticketOrderData = ticketOrderRepository.findById(orderId);
         if (ticketOrderData.isPresent())
         {
             TicketOrder _ticketOrder = ticketOrderData.get();
@@ -231,7 +232,7 @@ public class TicketController {
     @GetMapping(value = "/eventTicketType/{id}")
     public ResponseEntity<EventTicketType> getEventTicketTypeById(@PathVariable("id") String eventTicketId)
     {
-        java.util.Optional<EventTicketType> eventTicketTypeData = eventTicketTypeRepository.findById(eventTicketId);
+        Optional<EventTicketType> eventTicketTypeData = eventTicketTypeRepository.findById(eventTicketId);
         if (eventTicketTypeData.isPresent())
         {
             return new ResponseEntity<>(eventTicketTypeData.get(), HttpStatus.OK);
@@ -241,8 +242,8 @@ public class TicketController {
         }
     }
 
-    @GetMapping(value = "/eventTicketType/eventId")
-    public ResponseEntity<List<EventTicketType>> getEventTicketTypeByEventId(String eventId)
+    @GetMapping(value = "/eventTicketType/eventId/{eventId}")
+    public ResponseEntity<List<EventTicketType>> getEventTicketTypeByEventId(@RequestParam("eventId") String eventId)
     {
         
         try {
@@ -275,6 +276,29 @@ public class TicketController {
         catch (Exception e)
         {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value ="/eventTicketType/{id}")
+    public ResponseEntity<EventTicketType> updateEventTicketTypeById(@PathVariable("id") String eventTicketTypeId, @RequestBody EventTicketType eventTicketType)
+    {
+        Optional<EventTicketType> eventTicketTypeData = eventTicketTypeRepository.findById(eventTicketTypeId);
+        if(eventTicketTypeData.isPresent())
+        {
+            EventTicketType _eventTicketType = eventTicketTypeData.get();
+            _eventTicketType.setDescription(eventTicketType.getDescription());
+            _eventTicketType.setEndDate(eventTicketType.getEndDate());
+            _eventTicketType.setEventId(eventTicketType.getEventId());
+            _eventTicketType.setInStock(eventTicketType.getInStock());
+            _eventTicketType.setPrice(eventTicketType.getPrice());
+            _eventTicketType.setStartDate(eventTicketType.getStartDate());
+            _eventTicketType.setTicketName(eventTicketType.getTicketName());
+
+            return new ResponseEntity<>(eventTicketTypeRepository.save(_eventTicketType), HttpStatus.OK);
+        }
+        else 
+        {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

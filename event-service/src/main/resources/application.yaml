@@ -1,0 +1,12 @@
+
+server:
+  port: 9012
+
+spring:
+  application:
+    name: event-service
+#  config:
+#    import: optional:configserver:http://localhost:9296
+  data:
+    mongodb:
+      uri: mongodb+srv://huynhtrongnghia10012000:<18120478>@event-service.nvirmqw.mongodb.net/?retryWrites=true&w=majority&appName=event-service
