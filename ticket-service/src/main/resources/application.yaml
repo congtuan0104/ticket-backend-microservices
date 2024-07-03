@@ -9,6 +9,5 @@ spring:
 #    import: optional:configserver:http://localhost:9296
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: TicketService
+      uri: mongodb+srv://huynhtrongnghia10012000:18120478@ticket-service.awafma7.mongodb.net/?retryWrites=true&w=majority&appName=ticket-
+      database: ticket-service

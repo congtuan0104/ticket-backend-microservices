@@ -9,5 +9,5 @@ import com.ticket.event.entities.City;
 
 @Repository
 public interface CityRepository extends MongoRepository<City, String> {
-    List<City> FindByCityNameLike(String cityName);
+    List<City> findByCityNameLike(String cityName);
 }

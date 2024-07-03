@@ -64,7 +64,7 @@ public class CityController {
     {
         List<City> cities = new ArrayList<City>();
         try {
-            cities = cityRepository.FindByCityNameLike(cityName);
+            cities = cityRepository.findByCityNameLike(cityName);
             if (cities.isEmpty())
             {
                 return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
