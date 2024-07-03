@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EventRepository extends MongoRepository<Event, String>, customEventRepository {
-    Page<Event> findByCateIdAndEventNameLikeAndLocationNameLikeAndEventAddressLikeAndCityIdAndOrganizationIdAndStartTimeBetweenAndBasePriceBetween(
+    Page<Event> findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeBetweenOrBasePriceBetween(
         String cateId, 
         String eventName, 
         String locationName, 
@@ -24,12 +24,12 @@ public interface EventRepository extends MongoRepository<Event, String>, customE
         String organizationId, 
         LocalDateTime  startDateTime, 
         LocalDateTime endDateTime, 
-        float startPrice, 
-        float endPrice,
+        Float startPrice, 
+        Float endPrice,
         Pageable pageable
     );
    
-    Page<Event> findByCateIdAndEventNameLikeAndLocationNameLikeAndEventAddressLikeAndCityIdAndOrganizationIdAndEndTimeBetweenAndBasePriceBetween(
+    Page<Event> findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrEndTimeBetweenOrBasePriceBetween(
         String cateId, 
         String eventName, 
         String locationName, 
@@ -38,13 +38,13 @@ public interface EventRepository extends MongoRepository<Event, String>, customE
         String organizationId, 
         LocalDateTime  startDateTime, 
         LocalDateTime endDateTime, 
-        float startPrice, 
-        float endPrice,
+        Float startPrice, 
+        Float endPrice,
         Pageable pageable
 
     );
 
-    Page<Event> findByCateIdAndEventNameLikeAndLocationNameLikeAndEventAddressLikeAndCityIdAndOrganizationIdAndStartTimeLessThanAndEndTimeGreaterThanAndBasePriceBetween(
+    Page<Event> findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeGreaterThanOrEndTimeLessThanOrBasePriceBetween(
         String cateId, 
         String eventName, 
         String locationName, 
@@ -53,8 +53,8 @@ public interface EventRepository extends MongoRepository<Event, String>, customE
         String organizationId, 
         LocalDateTime  startDateTime, 
         LocalDateTime endDateTime, 
-        float startPrice, 
-        float endPrice,
+        Float startPrice, 
+        Float endPrice,
         Pageable pageable
 
     );

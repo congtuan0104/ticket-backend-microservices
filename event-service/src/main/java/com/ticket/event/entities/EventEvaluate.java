@@ -18,15 +18,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-@Document(collection = "eventAgenda")
+@Document(collection = "eventEvaluate")
 
-public class EventAgenda {
+public class EventEvaluate {
     @JsonSerialize(using = ToStringSerializer.class)
     @Id
-    private ObjectId agendaId;
-    private LocalDateTime time;
+    private ObjectId evaluateId;
+    private String userId;
     private String eventId;
     private String evaluateContent;
     private Float rating;
+    private LocalDateTime time;
 
 }

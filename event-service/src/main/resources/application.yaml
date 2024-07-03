@@ -9,4 +9,5 @@ spring:
 #    import: optional:configserver:http://localhost:9296
   data:
     mongodb:
-      uri: mongodb+srv://huynhtrongnghia10012000:18120478@ticket-service.nvirmqw.mongodb.net/?retryWrites=true&w=majority&appName=ticket-service
+      uri: mongodb+srv://huynhtrongnghia10012000:18120478@ryucluster.hkwulwu.mongodb.net/?retryWrites=true&w=majority&appName=RyuCluster
+      database: event-service

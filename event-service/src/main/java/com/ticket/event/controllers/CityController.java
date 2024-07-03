@@ -95,7 +95,6 @@ public class CityController {
 
     @PutMapping(value = "/city")
     public ResponseEntity<City> updateCityById(
-        @RequestParam(name = "cityId") String cityId,
         @RequestBody City inputCity
     )
     {

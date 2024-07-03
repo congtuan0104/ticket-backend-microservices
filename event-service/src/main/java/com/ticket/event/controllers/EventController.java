@@ -31,6 +31,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 @RequestMapping("/api")
@@ -42,7 +43,7 @@ public class EventController {
     @GetMapping
     public String home()
     {
-        return "Event in Event Service is running at port " + env.getProperty("local.server.port");
+        return "Event Service is running at port " + env.getProperty("local.server.port");
     }
 
     @Autowired
@@ -99,20 +100,20 @@ public class EventController {
         @RequestParam(required = false, name = "locationName") String locationName,
         @RequestParam(required = false, name = "cityId") String cityId,
         @RequestParam(required = false, name = "organizationId") String organizationId,
-        @RequestParam(required = false, name = "startTime") LocalDateTime startDateTime,
-        @RequestParam(required = false, name ="endTime") LocalDateTime endDateTime,
-        @RequestParam(required = false, name = "startPrice") float startPrice,
-        @RequestParam(required = false, name = "endPrice") float endPrice
+        @RequestParam(required = false, name = "startTime") @DateTimeFormat LocalDateTime startDateTime,
+        @RequestParam(required = false, name ="endTime") @DateTimeFormat LocalDateTime endDateTime,
+        @RequestParam(required = false, name = "startPrice") Float startPrice,
+        @RequestParam(required = false, name = "endPrice") Float endPrice
     )
     {
         try {
         Pageable paging = PageRequest.of(page, size);
         
-
-        Page<Event> events1 = eventRepository.findByCateIdAndEventNameLikeAndLocationNameLikeAndEventAddressLikeAndCityIdAndOrganizationIdAndStartTimeBetweenAndBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
-        Page<Event> events2 = eventRepository.findByCateIdAndEventNameLikeAndLocationNameLikeAndEventAddressLikeAndCityIdAndOrganizationIdAndEndTimeBetweenAndBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
-        Page<Event> events3 = eventRepository.findByCateIdAndEventNameLikeAndLocationNameLikeAndEventAddressLikeAndCityIdAndOrganizationIdAndStartTimeLessThanAndEndTimeGreaterThanAndBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
         
+        Page<Event> events1 = eventRepository.findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeBetweenOrBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
+        Page<Event> events2 = eventRepository.findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrEndTimeBetweenOrBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
+        Page<Event> events3 = eventRepository.findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeGreaterThanOrEndTimeLessThanOrBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
+       
         List<Event> mergedList = Stream.concat(events1.stream(), events2.stream())
                                         .distinct()
                                         .collect(Collectors.toList());
@@ -120,6 +121,8 @@ public class EventController {
         mergedList = Stream.concat(mergedList.stream(), events3.stream())
                                         .distinct()
                                         .collect(Collectors.toList());
+        
+        
 
         // Calculate start and end index
         int start = (page - 1) * size;
@@ -155,13 +158,12 @@ public class EventController {
             return new ResponseEntity<>(_event, HttpStatus.CREATED);
         } catch (Exception e) {
             // TODO: handle exception
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
 
-    @PutMapping(value = "/event/")
+    @PutMapping(value = "/event")
     public ResponseEntity<Event> updateEventById(@RequestBody Event inputEvent)
     {
         Optional<Event> eventData = eventRepository.findById(inputEvent.getEventId().toString());
@@ -188,8 +190,8 @@ public class EventController {
         }
     }
 
-    @DeleteMapping(value="/event/{id}")
-    public ResponseEntity<HttpStatus> deleteEventById(@PathVariable("id") String eventId)
+    @DeleteMapping(value="/event")
+    public ResponseEntity<HttpStatus> deleteEventById(@RequestParam(name = "eventId") String eventId)
     {
         try {
             eventRepository.deleteById(eventId);

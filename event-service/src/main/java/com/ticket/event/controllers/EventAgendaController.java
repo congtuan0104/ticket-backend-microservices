@@ -65,11 +65,11 @@ public class EventAgendaController {
         }
     }
 
-    @GetMapping(value = "eventAgenda/eventId")
+    @GetMapping(value = "eventAgenda/{eventId}")
     public ResponseEntity<Map<String, Object>> searchEventAgendaByEventId(
         @RequestParam(defaultValue = "0", name = "page") int page,
         @RequestParam(defaultValue = "12", name ="size") int size,
-        @RequestParam(name = "eventID") String eventId
+        @PathVariable(name = "eventId") String eventId
     )
     {
         List<EventAgenda> eventAgendas= new ArrayList<EventAgenda>();
@@ -143,6 +143,7 @@ public class EventAgendaController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             // TODO: handle exception
+
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
