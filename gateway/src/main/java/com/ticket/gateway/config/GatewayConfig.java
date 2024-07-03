@@ -22,9 +22,6 @@ public class GatewayConfig {
                 .route("auth-service", r -> r.path("/api/auth/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://auth-service"))
-                .route("user-service", r -> r.path("/api/users/**")
-                        .filters(f -> f.filter(filter))
-                        .uri("lb://user-service"))
                 .route("statistic-service", r -> r.path("/api/test/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://statistic-service"))
@@ -37,6 +34,12 @@ public class GatewayConfig {
                 .route("organization-service", r -> r.path("/api/organization/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://organization-service"))
+                .route("payment-service", r -> r.path("/api/payment/**")
+                        .filters(f -> f.filter(filter))
+                        .uri("lb://payment-service"))
+                .route("payment-service", r -> r.path("/api/promotion/**")
+                        .filters(f -> f.filter(filter))
+                        .uri("lb://payment-service"))
                 .build();
     }
 }

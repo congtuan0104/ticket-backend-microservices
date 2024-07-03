@@ -29,6 +29,7 @@
         <ticket:module>image-service</ticket:module>
         <ticket:module>user-service</ticket:module>
         <ticket:module>ticket-service</ticket:module>
+        <ticket:module>event-service</ticket:module>
     </ticket:modules>
 
     <ticket:build>

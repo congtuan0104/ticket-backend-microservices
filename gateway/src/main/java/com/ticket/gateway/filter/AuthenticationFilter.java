@@ -26,12 +26,13 @@ public class AuthenticationFilter implements GatewayFilter {
             "/api/auth/register",
             "/api/auth/login",
             "/api/auth",
-            "/api/users",
             "/api/gallery",
             "/api/upload",
             "/api/hello",
             "/api/booking",
-            "/api/organization"
+            "/api/organization",
+            "/api/payment",
+            "/api/promotion"
     );
 
     @Autowired
