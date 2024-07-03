@@ -21,12 +21,12 @@ public class AuthService {
 
     public RegisterResponse register(RegisterRequest registerRequest) {
         //do validation if user already exists
-        UserVO user = restTemplate.getForObject("http://user-service/users?email=" + registerRequest.getEmail(), UserVO.class);
+        UserVO user = restTemplate.getForObject("http://user-service/api/users?email=" + registerRequest.getEmail(), UserVO.class);
         Assert.isNull(user, "Tài khoản đã tồn tại");
 
         registerRequest.setPassword(BCrypt.hashpw(registerRequest.getPassword(), BCrypt.gensalt()));
 //
-        UserVO userVO = restTemplate.postForObject("http://user-service/users", registerRequest, UserVO.class);
+        UserVO userVO = restTemplate.postForObject("http://user-service/api/users", registerRequest, UserVO.class);
         Assert.notNull(userVO, "Tạo tài khoản thất bại");
 
         String accessToken = jwt.generate(registerRequest.getEmail(), "ACCESS");
@@ -37,8 +37,8 @@ public class AuthService {
     }
 
     public LoginResponse login(LoginRequest loginRequest) {
-        // kiểm tra user có tồn tại không (api user-service/users?email=...)
-        UserVO userVO = restTemplate.getForObject("http://user-service/users?email=" + loginRequest.getEmail(), UserVO.class);
+        // kiểm tra user có tồn tại không
+        UserVO userVO = restTemplate.getForObject("http://user-service/api/users?email=" + loginRequest.getEmail(), UserVO.class);
         Assert.notNull(userVO, "Tài khoản không tồn tại");
 
 //        // kiểm tra password có đúng không

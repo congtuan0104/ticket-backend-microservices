@@ -1,10 +1,12 @@
 package com.ticket.user.services;
 
+import com.ticket.user.entities.CreateOrganizationRequest;
 import com.ticket.user.entities.User;
 import com.ticket.user.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,7 +28,25 @@ public class UserService {
 
 
     public User save(User user) {
-        return this.repository.save(user);
+        var newUser = this.repository.save(user);
+        if(newUser.getRole().equals("organize")){
+            HttpEntity<CreateOrganizationRequest> createOrganizationRequest = new HttpEntity<CreateOrganizationRequest>(
+                    new CreateOrganizationRequest(newUser.getId().toHexString(), ""));
+
+            restTemplate.postForObject("http://organization-service/api/organization", createOrganizationRequest, Object.class);
+        }
+        return newUser;
+    }
+
+    public User update(User user) {
+        var newUser = this.repository.save(user);
+        if(newUser.getRole().equals("organize")){
+            HttpEntity<CreateOrganizationRequest> createOrganizationRequest = new HttpEntity<CreateOrganizationRequest>(
+                    new CreateOrganizationRequest(newUser.getId().toHexString(), ""));
+
+            restTemplate.postForObject("http://organization-service/api/organization", createOrganizationRequest, Object.class);
+        }
+        return newUser;
     }
 
     public User getById(ObjectId id) {

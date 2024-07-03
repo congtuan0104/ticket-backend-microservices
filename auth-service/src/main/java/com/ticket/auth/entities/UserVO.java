@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserVO {
     private String id;
+    private String avatar;
     private String email;
     private String password;
     private String name;
