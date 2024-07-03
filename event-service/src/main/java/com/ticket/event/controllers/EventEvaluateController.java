@@ -30,7 +30,7 @@ import com.ticket.event.entities.EventEvaluate;
 import com.ticket.event.repositories.EventEvaluateRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/event")
 public class EventEvaluateController {
     @Autowired
     private EventEvaluateRepository eventEvaluateRepository;

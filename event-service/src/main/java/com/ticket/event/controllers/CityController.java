@@ -23,7 +23,7 @@ import com.ticket.event.entities.City;
 import com.ticket.event.repositories.CityRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/event")
 public class CityController {
     @Autowired
     private CityRepository cityRepository;

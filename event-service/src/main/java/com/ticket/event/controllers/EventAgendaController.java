@@ -28,7 +28,7 @@ import com.ticket.event.entities.EventAgenda;
 import com.ticket.event.repositories.EventAgendaRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/event")
 public class EventAgendaController {
 
 

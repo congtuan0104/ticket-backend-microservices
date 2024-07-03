@@ -30,7 +30,8 @@ public class AuthenticationFilter implements GatewayFilter {
 //            "/api/test",
             "/api/hello",
             "/api/express",
-            "/api/ticket"
+            "/api/ticket",
+            "/api/event"
     );
 
     @Autowired

@@ -21,7 +21,7 @@ import com.ticket.event.entities.Organization;
 import com.ticket.event.repositories.OrganizationRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/event")
 
 public class OrganizationController {
     @Autowired

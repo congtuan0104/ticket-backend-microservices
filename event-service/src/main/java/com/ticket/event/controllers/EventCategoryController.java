@@ -21,7 +21,7 @@ import com.ticket.event.entities.EventCategory;
 import com.ticket.event.repositories.EventCategoryRepository;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/event")
 public class EventCategoryController {
     @Autowired
     private EventCategoryRepository eventCategoryRepository;

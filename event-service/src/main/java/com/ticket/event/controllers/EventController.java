@@ -34,7 +34,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/event")
 
 public class EventController {
     @Autowired
