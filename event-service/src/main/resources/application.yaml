@@ -1,0 +1,13 @@
+
+server:
+  port: 9012
+
+spring:
+  application:
+    name: event-service
+#  config:
+#    import: optional:configserver:http://localhost:9296
+  data:
+    mongodb:
+      uri: mongodb+srv://huynhtrongnghia10012000:18120478@ryucluster.hkwulwu.mongodb.net/?retryWrites=true&w=majority&appName=RyuCluster
+      database: event-service

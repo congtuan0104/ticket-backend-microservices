@@ -1,4 +1,4 @@
-package com.ticket.user.entities;
+package com.ticket.ticket.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -7,22 +7,26 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-@Document(collection = "users")
-public class User {
+@Document(collection = "tickets")
 
+public class Ticket {
 
     @JsonSerialize(using = ToStringSerializer.class)
-    private ObjectId id;
-    private String name;
-    private String email;
-    private String password;
-    private String phoneNumber;
-    private String role;
-    
+    @Id
+    private ObjectId ticketId;
+    private String orderId;
+    private String eventTicketId;
+    private String promotionCode;
+    private int quantity;
+    private float totalMoney;
+    private String status;
+   
 }
