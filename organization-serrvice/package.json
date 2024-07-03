@@ -1,0 +1,37 @@
+{
+  "name": "organization-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "rimraf dist && tsc",
+    "predev": "npm run build",
+    "dev": "cross-env NODE_ENV=development concurrently \"tsc --watch\" \"nodemon -q dist/index.js\"",
+    "prestart": "npm run build",
+    "start": "cross-env NODE_ENV=production node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npx prisma migrate deploy && npm run start"
+  },
+  "author": "cong_tuan",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.16.0",
+    "axios": "^1.7.2",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.0",
+    "eureka-js-client": "^4.5.0",
+    "express": "^4.19.2",
+    "prisma": "^5.16.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^5.5.2"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/eureka-js-client": "^4.5.9",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.14.8",
+    "concurrently": "^7.0.0",
+    "nodemon": "^2.0.15",
+    "prisma-generator-fake-data": "^0.14.2"
+  }
+}
