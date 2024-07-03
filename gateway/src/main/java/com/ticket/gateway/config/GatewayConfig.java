@@ -25,15 +25,18 @@ public class GatewayConfig {
                 .route("statistic-service", r -> r.path("/api/test/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://statistic-service"))
-                .route("demo-express-service", r -> r.path("/api/express/**")
+                .route("booking-service", r -> r.path("/api/booking/**")
                         .filters(f -> f.filter(filter))
-                        .uri("lb://demo-express-service"))
+                        .uri("lb://booking-service"))
                 .route("ticket-service", r-> r.path("/api/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://ticket-service"))
                 .route("event-service", r-> r.path("/api/**")
                         .filters(f -> f.filter(filter))
                         .uri("lb://event-service"))
+                .route("upload-service", r -> r.path("/api/upload/**")
+                        .filters(f -> f.filter(filter))
+                        .uri("lb://upload-service"))
                 .build();
     }
 }
