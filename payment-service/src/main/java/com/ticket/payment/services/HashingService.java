@@ -1,4 +1,4 @@
-package com.ticket.paymentservice.services;
+package com.ticket.payment.services;
 
 import org.bouncycastle.crypto.digests.SHA512Digest;
 import org.bouncycastle.crypto.macs.HMac;
@@ -35,10 +35,8 @@ public class HashingService {
             byte[] hmacSha512 = calculateHmacSHA512(message.getBytes(StandardCharsets.UTF_8), key.getBytes(StandardCharsets.UTF_8));
 
             // Convert byte array to hex string (optional)
-            String hmacSha512Hex = bytesToHex(hmacSha512);
-            return hmacSha512Hex;
+            return bytesToHex(hmacSha512);
         } catch (Exception e) {
-            e.printStackTrace();
             return message;
         }
     }

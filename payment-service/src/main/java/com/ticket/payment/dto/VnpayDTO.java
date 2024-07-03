@@ -1,4 +1,4 @@
-package com.ticket.paymentservice.dto;
+package com.ticket.payment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +14,7 @@ public class VnpayDTO {
     private String  vnp_Amount;
     private String vnp_Command;
     private String vnp_CreateDate;
+    private String vnp_BankCode;
     private String vnp_CurrCode;
     private String vnp_IpAddr;
     private String vnp_Locale;

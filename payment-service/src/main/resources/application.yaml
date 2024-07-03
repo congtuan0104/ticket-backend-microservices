@@ -4,6 +4,14 @@ server:
 spring:
   application:
     name: payment-service
+  data:
+    mongodb:
+      url: mongodb+srv://nsonbao0601:alNlxNVoma7mgxKo@cluster0.hknjigi.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+#      username: nsonbao0601
+#      password: alNlxNVoma7mgxKo
+#      host: cluster0.hknjigi.mongodb.net
+      database: ticket
+
 
 eureka:
   client:
@@ -15,7 +23,7 @@ jwt:
 
 
 vnpay:
-  terminalId: 1VZJARYJ
-  secret: MW5MTFN62ZPPNEBPK5RQO8I0F9ZNS9HJ
-  returnUrl: https://localhost:8005/api/payment/return
-  vnpayUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  terminalId: LBSLHTAQ
+  secret: JHFEEHQQRRLBEMVMSDGAGKZREGVFBZXR
+  vnpayUrl:  https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  returnUrl: http://localhost:3000/vnpay/return

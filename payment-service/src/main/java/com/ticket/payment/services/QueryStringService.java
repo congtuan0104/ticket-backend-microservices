@@ -1,6 +1,6 @@
-package com.ticket.paymentservice.services;
+package com.ticket.payment.services;
 
-import com.ticket.paymentservice.dto.VnpayDTO;
+import com.ticket.payment.dto.VnpayDTO;
 import org.bouncycastle.crypto.macs.HMac;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,6 +41,9 @@ public class QueryStringService {
         params.put("vnp_TmnCode", dto.getVnp_TmnCode());
         params.put("vnp_TxnRef", dto.getVnp_TxnRef());
         params.put("vnp_Version", dto.getVnp_Version());
+        if (!dto.getVnp_BankCode().isEmpty() && dto.getVnp_BankCode() != null) {
+            params.put("vnp_BankCode", dto.getVnp_BankCode());
+        }
 
         //Build query string
         List fieldNames = new ArrayList(params.keySet());
