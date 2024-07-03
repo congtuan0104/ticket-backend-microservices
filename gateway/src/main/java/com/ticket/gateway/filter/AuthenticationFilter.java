@@ -29,7 +29,6 @@ public class AuthenticationFilter implements GatewayFilter {
             "/api/gallery",
             "/api/upload",
             "/api/hello",
-            "/api/express",
             "/api/booking"
     );
 
