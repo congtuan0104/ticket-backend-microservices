@@ -188,6 +188,7 @@ public class PaymentController {
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String paymentMethod,
             @RequestParam(required = false) String paymentAccount,
+            @RequestParam(required = false) String orderId,
             @RequestParam(required = false) LocalDateTime transactionTimeFrom,
             @RequestParam(required = false) LocalDateTime transactionTimeTo
     ) {
@@ -197,6 +198,7 @@ public class PaymentController {
                             status,
                             paymentMethod,
                             paymentAccount,
+                            orderId,
                             transactionTimeFrom,
                             transactionTimeTo);
             if(payments.isEmpty()) {
@@ -204,7 +206,6 @@ public class PaymentController {
             }
             return new ResponseEntity<>(payments, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

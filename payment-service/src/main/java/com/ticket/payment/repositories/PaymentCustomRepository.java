@@ -6,5 +6,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PaymentCustomRepository {
-    List<PaymentInfo> findPayment(String status, String paymentMethod, String paymentAccount, LocalDateTime transactionTimeFrom, LocalDateTime transactionTimeTo);
+    List<PaymentInfo> findPayment(
+            String status,
+            String paymentMethod,
+            String paymentAccount,
+            String orderId,
+            LocalDateTime transactionTimeFrom,
+            LocalDateTime transactionTimeTo);
 }

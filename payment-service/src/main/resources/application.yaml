@@ -23,7 +23,7 @@ jwt:
 
 
 vnpay:
-  terminalId: 1VZJARYJ
-  secret: MW5MTFN62ZPPNEBPK5RQO8I0F9ZNS9HJ
-  returnUrl: https://localhost:8005/api/payment/return
-  vnpayUrl: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  terminalId: LBSLHTAQ
+  secret: JHFEEHQQRRLBEMVMSDGAGKZREGVFBZXR
+  vnpayUrl:  https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+  returnUrl: http://localhost:3000/vnpay/return

@@ -18,11 +18,20 @@ public class PaymentCustomRepositoryImpl implements PaymentCustomRepository {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public List<PaymentInfo> findPayment(String status, String paymentMethod, String paymentAccount, LocalDateTime transactionTimeFrom, LocalDateTime transactionTimeTo) {
+    public List<PaymentInfo> findPayment(
+            String status,
+            String paymentMethod,
+            String paymentAccount,
+            String orderId,
+            LocalDateTime transactionTimeFrom,
+            LocalDateTime transactionTimeTo) {
         Query query = new Query();
 
         if (status != null && !status.isEmpty()) {
             query.addCriteria(Criteria.where("status").is(status));
+        }
+        if (orderId != null && !orderId.isEmpty()) {
+            query.addCriteria(Criteria.where("orderId").is(orderId));
         }
         if (paymentMethod != null && !paymentMethod.isEmpty()) {
             query.addCriteria(Criteria.where("paymentMethod").is(paymentMethod));

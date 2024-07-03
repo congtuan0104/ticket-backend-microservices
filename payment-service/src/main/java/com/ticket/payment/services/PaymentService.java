@@ -60,6 +60,13 @@ public class PaymentService {
         dto.setVnpUrl(env.getProperty("vnpay.vnpayUrl"));
         dto.setVnp_Version("2.1.0");
         dto.setVnp_HashSecret(env.getProperty("vnpay.secret"));
+        if (requestDTO.getPaymentMethod().equals("atm")) {
+            dto.setVnp_BankCode("VNBANK");
+        } else if (requestDTO.getPaymentMethod().equals("intCard")) {
+            dto.setVnp_BankCode("INTCARD");
+        } else {
+            dto.setVnp_BankCode("VNPAYQR");
+        }
         return queryStringService.vnpayQueryString(dto);
     }
 
@@ -85,9 +92,10 @@ public class PaymentService {
             String status,
             String paymentMethod,
             String paymentAccount,
+            String orderId,
             LocalDateTime transactionTimeFrom,
             LocalDateTime transactionTimeTo) {
-        return this.paymentRepository.findPayment(status, paymentMethod, paymentAccount, transactionTimeFrom, transactionTimeTo);
+        return this.paymentRepository.findPayment(status, paymentMethod, paymentAccount, orderId, transactionTimeFrom, transactionTimeTo);
     }
 
 }
