@@ -41,9 +41,9 @@ public class OrganizationController {
         }
     }
 
-    @GetMapping(value = "/organization/{id}")
+    @GetMapping(value = "/organization/organizationId")
     public ResponseEntity<Organization> getOrganizationByOrganizationId(
-        @PathVariable("id") String organizationId
+        @RequestParam("OrganizationId") String organizationId
     )
     {
         Optional<Organization>  organizationData = organizationRepository.findById(organizationId);
@@ -59,7 +59,7 @@ public class OrganizationController {
 
     @GetMapping(value = "/organization/userId")
     public ResponseEntity<List<Organization>> getOrganizationByUserId(
-        @RequestParam(name ="id") String userId
+        @RequestParam(name ="userId") String userId
     )
     {
         try {
@@ -96,6 +96,7 @@ public class OrganizationController {
         {
             Organization _organization = organzationData.get();
             _organization.setUserId(inputOrganization.getUserId());
+            _organization.setOrganizationName(inputOrganization.getOrganizationName());
             _organization.setDescription(inputOrganization.getDescription());
             _organization.setImgLogo_src(inputOrganization.getImgLogo_src());
 

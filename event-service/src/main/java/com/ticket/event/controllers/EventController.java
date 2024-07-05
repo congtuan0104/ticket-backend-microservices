@@ -1,8 +1,12 @@
 package com.ticket.event.controllers;
 
 
+import com.mongodb.client.MongoClients;
 import com.ticket.event.entities.Event;
+import com.ticket.event.entities.EventDTO;
+import com.ticket.event.entities.PagedResponse;
 import com.ticket.event.repositories.EventRepository;
+import com.ticket.event.services.EventService;
 
 import jakarta.websocket.server.PathParam;
 import jakarta.ws.rs.GET;
@@ -31,6 +35,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
@@ -91,64 +98,64 @@ public class EventController {
         }
     }
 
-    @GetMapping(value = "/event/search")
-    public ResponseEntity<Map<String,Object>> searchWithFilter(
-        @RequestParam(defaultValue = "0", name = "page") int page,
-        @RequestParam(defaultValue = "12", name ="size") int size,
-        @RequestParam(required = false, name = "cateId") String cateId,
-        @RequestParam(required = false, name = "eventName") String eventName,
-        @RequestParam(required = false, name = "locationName") String locationName,
-        @RequestParam(required = false, name = "cityId") String cityId,
-        @RequestParam(required = false, name = "organizationId") String organizationId,
-        @RequestParam(required = false, name = "startTime") @DateTimeFormat LocalDateTime startDateTime,
-        @RequestParam(required = false, name ="endTime") @DateTimeFormat LocalDateTime endDateTime,
-        @RequestParam(required = false, name = "startPrice") Float startPrice,
-        @RequestParam(required = false, name = "endPrice") Float endPrice
-    )
-    {
-        try {
-        Pageable paging = PageRequest.of(page, size);
+    // @GetMapping(value = "/event/search")
+    // public ResponseEntity<Map<String,Object>> searchWithFilter(
+    //     @RequestParam(defaultValue = "0", name = "page") int page,
+    //     @RequestParam(defaultValue = "12", name ="size") int size,
+    //     @RequestParam(required = false, name = "cateId") String cateId,
+    //     @RequestParam(required = false, name = "eventName") String eventName,
+    //     @RequestParam(required = false, name = "locationName") String locationName,
+    //     @RequestParam(required = false, name = "cityId") String cityId,
+    //     @RequestParam(required = false, name = "organizationId") String organizationId,
+    //     @RequestParam(required = false, name = "startTime") @DateTimeFormat LocalDateTime startDateTime,
+    //     @RequestParam(required = false, name ="endTime") @DateTimeFormat LocalDateTime endDateTime,
+    //     @RequestParam(required = false, name = "startPrice") Float startPrice,
+    //     @RequestParam(required = false, name = "endPrice") Float endPrice
+    // )
+    // {
+    //     try {
+    //     Pageable paging = PageRequest.of(page, size);
         
         
-        Page<Event> events1 = eventRepository.findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeBetweenOrBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
-        Page<Event> events2 = eventRepository.findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrEndTimeBetweenOrBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
-        Page<Event> events3 = eventRepository.findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeGreaterThanOrEndTimeLessThanOrBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
+    //     Page<Event> events1 = eventRepository.findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeBetweenOrBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
+    //     Page<Event> events2 = eventRepository.findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrEndTimeBetweenOrBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
+    //     Page<Event> events3 = eventRepository.findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeGreaterThanOrEndTimeLessThanOrBasePriceBetween(cateId, eventName, locationName, locationName, cityId, organizationId, startDateTime, endDateTime, startPrice, endPrice, paging);
        
-        List<Event> mergedList = Stream.concat(events1.stream(), events2.stream())
-                                        .distinct()
-                                        .collect(Collectors.toList());
+    //     List<Event> mergedList = Stream.concat(events1.stream(), events2.stream())
+    //                                     .distinct()
+    //                                     .collect(Collectors.toList());
 
-        mergedList = Stream.concat(mergedList.stream(), events3.stream())
-                                        .distinct()
-                                        .collect(Collectors.toList());
+    //     mergedList = Stream.concat(mergedList.stream(), events3.stream())
+    //                                     .distinct()
+    //                                     .collect(Collectors.toList());
         
         
 
-        // Calculate start and end index
-        int start = (page - 1) * size;
-        int end = Math.min(start + page, mergedList.size());
+    //     // Calculate start and end index
+    //     int start = (page - 1) * size;
+    //     int end = Math.min(start + page, mergedList.size());
 
-        // Create a sublist of events for the requested page
-        List<Event> sublist = mergedList.subList(start, end);
+    //     // Create a sublist of events for the requested page
+    //     List<Event> sublist = mergedList.subList(start, end);
 
-        // Create Page object
-        Page<Event> pagedList = new PageImpl<>(sublist, PageRequest.of(page - 1, size), mergedList.size());
+    //     // Create Page object
+    //     Page<Event> pagedList = new PageImpl<>(sublist, PageRequest.of(page - 1, size), mergedList.size());
 
-        List<Event> events = new ArrayList<Event>();
-        events = pagedList.getContent();
+    //     List<Event> events = new ArrayList<Event>();
+    //     events = pagedList.getContent();
 
-        Map<String, Object> response = new HashMap<>();
-            response.put("events", events);
-            response.put("currentPage", pagedList.getNumber());
-            response.put("totalItems", pagedList.getTotalElements());
-            response.put("totalPages", pagedList.getTotalPages());
+    //     Map<String, Object> response = new HashMap<>();
+    //         response.put("events", events);
+    //         response.put("currentPage", pagedList.getNumber());
+    //         response.put("totalItems", pagedList.getTotalElements());
+    //         response.put("totalPages", pagedList.getTotalPages());
             
-        return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            // TODO: handle exception
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    //     return new ResponseEntity<>(response, HttpStatus.OK);
+    //     } catch (Exception e) {
+    //         // TODO: handle exception
+    //         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+    //     }
+    // }
 
     @PostMapping(value = "/event")
     public ResponseEntity<Event> createEvent(@RequestBody Event inputEvent)
@@ -170,7 +177,7 @@ public class EventController {
         if(eventData.isPresent())
         {
         Event _event = eventData.get();
-        _event.setCateId(inputEvent.getCateId());
+        _event.setEventCategoryId(inputEvent.getEventCategoryId());
         _event.setCityId(inputEvent.getCityId());
         _event.setEndTime(inputEvent.getEndTime());
         _event.setEventAddress(inputEvent.getEventAddress());
@@ -203,5 +210,43 @@ public class EventController {
     }
 
 
+
+    @GetMapping(value = "event/debug")
+    public ResponseEntity<PagedResponse<EventDTO>> demoApi(
+        @RequestParam(name = "eventCategoryId") String eventCategoryId,
+        @RequestParam(name = "eventName") String eventName,
+        @RequestParam(name = "locationName") String locationName,
+        @RequestParam(name = "eventAddress") String eventAddress,
+        @RequestParam(name = "cityId") String cityId,
+        @RequestParam(name = "organizationId") String organizationId,
+        @RequestParam(name = "startTime", defaultValue ="1800-01-13T10:09:42.411") @DateTimeFormat LocalDateTime startTime,
+        @RequestParam(name = "endTime", defaultValue ="2800-01-13T10:09:42.411") @DateTimeFormat LocalDateTime endTime,
+        @RequestParam(name = "basePrice", defaultValue = "9999999999999.0") Float basePrice,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "12") int size
+        )
+    {
+        try {
+
+            EventService eventService = new EventService();
+            PagedResponse<EventDTO> events = eventService.eventFilterHandler(
+                eventCategoryId, 
+                eventName,
+                locationName,
+                eventAddress,
+                cityId,
+                organizationId,
+                startTime,
+                endTime,
+                basePrice,
+                page,
+                size
+                );
+            return new ResponseEntity<>(events, HttpStatus.OK);
+        } catch (Exception e) {
+            // TODO: handle exception
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }   
+    }
 
 }

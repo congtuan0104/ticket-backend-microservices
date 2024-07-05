@@ -40,9 +40,9 @@ public class EventCategoryController {
 
     }
 
-    @GetMapping(value ="/eventCategory/{id}")
+    @GetMapping(value ="/eventCategory/getByEventCategoryId")
     public ResponseEntity<EventCategory> getEventCategoryById(
-        @PathVariable("id") String eventCategoryId
+        @RequestParam(name = "eventCategoryId") String eventCategoryId
     )
     {
         Optional<EventCategory> eventCategoryData = eventCategoryRepository.findById(eventCategoryId);
@@ -75,12 +75,12 @@ public class EventCategoryController {
         @RequestBody EventCategory inputEventCategory
     )
     {
-        Optional<EventCategory> eventCategoryData = eventCategoryRepository.findById(inputEventCategory.getECategoryId().toString());
+        Optional<EventCategory> eventCategoryData = eventCategoryRepository.findById(inputEventCategory.getEventCategoryId().toString());
         if (eventCategoryData.isPresent())
         {
             EventCategory _eventCategory = eventCategoryData.get();
-            _eventCategory.setECategoryName(inputEventCategory.getECategoryName());
-            _eventCategory.setECategoryDescription(inputEventCategory.getECategoryDescription());
+            _eventCategory.setEventCategoryName(inputEventCategory.getEventCategoryName());
+            _eventCategory.setEventCategoryDescription(inputEventCategory.getEventCategoryDescription());
 
             return new ResponseEntity<>(eventCategoryRepository.save(_eventCategory), HttpStatus.OK);
         }
@@ -92,7 +92,7 @@ public class EventCategoryController {
 
     @DeleteMapping(value = "/eventCategory")
     public ResponseEntity<HttpStatus> deleteByEventCategoryId(
-        @RequestParam(name = "eCategoryId") String eCategoryId
+        @RequestParam(name = "eventCategoryId") String eCategoryId
     )
     {
         try {
