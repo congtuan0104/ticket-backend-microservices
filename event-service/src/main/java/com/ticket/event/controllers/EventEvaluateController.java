@@ -82,8 +82,8 @@ public class EventEvaluateController {
         @RequestParam(required = false, name = "userId") String inputUserId,
         @RequestParam(required = false, name = "eventId") String inputEventId,
         @RequestParam(required = false, name = "rating") Float inputRating,
-        @RequestParam(required = false, name = "startTime") @DateTimeFormat LocalDateTime inputStartTime,
-        @RequestParam(required = false, name = "endTime") @DateTimeFormat LocalDateTime inputEndTime
+        @RequestParam(required = false, name = "startTime", defaultValue = "1800-01-18T03:09:42.411") @DateTimeFormat LocalDateTime inputStartTime,
+        @RequestParam(required = false, name = "endTime", defaultValue = "2400-01-18T03:09:42.411") @DateTimeFormat LocalDateTime inputEndTime
     )
     {
         List<EventEvaluate> eventEvaluateDatas = new ArrayList<EventEvaluate>() ;

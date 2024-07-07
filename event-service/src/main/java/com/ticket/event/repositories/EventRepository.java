@@ -14,48 +14,48 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface EventRepository extends MongoRepository<Event, String>, customEventRepository {
-    Page<Event> findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeBetweenOrBasePriceBetween(
-        String cateId, 
-        String eventName, 
-        String locationName, 
-        String eventAddress, 
-        String cityId, 
-        String organizationId, 
-        LocalDateTime  startDateTime, 
-        LocalDateTime endDateTime, 
-        Float startPrice, 
-        Float endPrice,
-        Pageable pageable
-    );
+public interface EventRepository extends MongoRepository<Event, String> {
+    // Page<Event> findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeBetweenOrBasePriceBetween(
+    //     String cateId, 
+    //     String eventName, 
+    //     String locationName, 
+    //     String eventAddress, 
+    //     String cityId, 
+    //     String organizationId, 
+    //     LocalDateTime  startDateTime, 
+    //     LocalDateTime endDateTime, 
+    //     Float startPrice, 
+    //     Float endPrice,
+    //     Pageable pageable
+    // );
    
-    Page<Event> findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrEndTimeBetweenOrBasePriceBetween(
-        String cateId, 
-        String eventName, 
-        String locationName, 
-        String eventAddress, 
-        String cityId, 
-        String organizationId, 
-        LocalDateTime  startDateTime, 
-        LocalDateTime endDateTime, 
-        Float startPrice, 
-        Float endPrice,
-        Pageable pageable
+    // Page<Event> findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrEndTimeBetweenOrBasePriceBetween(
+    //     String cateId, 
+    //     String eventName, 
+    //     String locationName, 
+    //     String eventAddress, 
+    //     String cityId, 
+    //     String organizationId, 
+    //     LocalDateTime  startDateTime, 
+    //     LocalDateTime endDateTime, 
+    //     Float startPrice, 
+    //     Float endPrice,
+    //     Pageable pageable
 
-    );
+    // );
 
-    Page<Event> findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeGreaterThanOrEndTimeLessThanOrBasePriceBetween(
-        String cateId, 
-        String eventName, 
-        String locationName, 
-        String eventAddress, 
-        String cityId, 
-        String organizationId, 
-        LocalDateTime  startDateTime, 
-        LocalDateTime endDateTime, 
-        Float startPrice, 
-        Float endPrice,
-        Pageable pageable
+    // Page<Event> findByCateIdOrEventNameLikeOrLocationNameLikeOrEventAddressLikeOrCityIdOrOrganizationIdOrStartTimeGreaterThanOrEndTimeLessThanOrBasePriceBetween(
+    //     String cateId, 
+    //     String eventName, 
+    //     String locationName, 
+    //     String eventAddress, 
+    //     String cityId, 
+    //     String organizationId, 
+    //     LocalDateTime  startDateTime, 
+    //     LocalDateTime endDateTime, 
+    //     Float startPrice, 
+    //     Float endPrice,
+    //     Pageable pageable
 
-    );
+    // );
 }

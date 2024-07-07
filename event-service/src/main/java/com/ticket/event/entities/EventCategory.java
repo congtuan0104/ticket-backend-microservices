@@ -21,8 +21,8 @@ import lombok.NoArgsConstructor;
 public class EventCategory {
     @JsonSerialize(using = ToStringSerializer.class)
     @Id
-    private ObjectId eCategoryId;
-    private String eCategoryName;
-    private String eCategoryDescription;
+    private ObjectId eventCategoryId;
+    private String eventCategoryName;
+    private String eventCategoryDescription;
     
 }

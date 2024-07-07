@@ -23,6 +23,7 @@ public class Organization {
     @Id
     private ObjectId organizationId;
     private String userId;
+    private String OrganizationName;
     private String description;
     private String imgLogo_src;
 }
