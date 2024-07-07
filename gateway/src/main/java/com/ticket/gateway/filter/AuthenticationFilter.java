@@ -32,7 +32,8 @@ public class AuthenticationFilter implements GatewayFilter {
             "/api/booking",
             "/api/organization",
             "/api/payment",
-            "/api/promotion"
+            "/api/promotion",
+            "/api/event"
     );
 
     @Autowired

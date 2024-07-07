@@ -30,6 +30,8 @@
         <ticket:module>user-service</ticket:module>
         <ticket:module>ticket-service</ticket:module>
         <ticket:module>event-service</ticket:module>
+        <ticket:module>notification-service</ticket:module>
+        <ticket:module>upload-service</ticket:module>
     </ticket:modules>
 
     <ticket:build>
