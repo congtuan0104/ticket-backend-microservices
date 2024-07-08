@@ -243,7 +243,7 @@ public class TicketController {
     }
 
     @GetMapping(value = "/eventTicketType/eventId/{eventId}")
-    public ResponseEntity<List<EventTicketType>> getEventTicketTypeByEventId(@RequestParam("eventId") String eventId)
+    public ResponseEntity<List<EventTicketType>> getEventTicketTypeByEventId(@PathVariable("eventId") String eventId)
     {
         
         try {

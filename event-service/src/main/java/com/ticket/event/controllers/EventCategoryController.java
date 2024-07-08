@@ -40,9 +40,9 @@ public class EventCategoryController {
 
     }
 
-    @GetMapping(value ="/eventCategory/getByEventCategoryId")
+    @GetMapping(value ="/eventCategory/{id}")
     public ResponseEntity<EventCategory> getEventCategoryById(
-        @RequestParam(name = "eventCategoryId") String eventCategoryId
+            @PathVariable("id") String eventCategoryId
     )
     {
         Optional<EventCategory> eventCategoryData = eventCategoryRepository.findById(eventCategoryId);
