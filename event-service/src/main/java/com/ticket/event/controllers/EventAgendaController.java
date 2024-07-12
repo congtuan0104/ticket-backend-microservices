@@ -65,11 +65,11 @@ public class EventAgendaController {
         }
     }
 
-    @GetMapping(value = "eventAgenda/{eventId}")
+    @GetMapping(value = "eventAgenda/eventId")
     public ResponseEntity<Map<String, Object>> searchEventAgendaByEventId(
         @RequestParam(defaultValue = "0", name = "page") int page,
         @RequestParam(defaultValue = "12", name ="size") int size,
-        @PathVariable(name = "eventId") String eventId
+        @RequestParam(name = "eventId") String eventId
     )
     {
         List<EventAgenda> eventAgendas= new ArrayList<EventAgenda>();
@@ -133,7 +133,7 @@ public class EventAgendaController {
         }
     }
     
-    @DeleteMapping(value = "/eventAgenda/{id}")
+    @DeleteMapping(value = "/eventAgenda")
     public ResponseEntity<HttpStatus> deleteByAgendaId(
         @PathVariable("id") String agendaId
     )

@@ -211,8 +211,8 @@ public class EventController {
 
 
 
-    @GetMapping(value = "event/debug")
-    public ResponseEntity<PagedResponse<EventDTO>> demoApi(
+    @GetMapping(value = "event/search")
+    public ResponseEntity<PagedResponse<EventDTO>> searchEventByFilter(
         @RequestParam(name = "eventCategoryId") String eventCategoryId,
         @RequestParam(name = "eventName") String eventName,
         @RequestParam(name = "locationName") String locationName,

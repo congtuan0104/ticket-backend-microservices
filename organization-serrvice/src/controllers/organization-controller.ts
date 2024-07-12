@@ -6,7 +6,7 @@ import { Prisma } from "@prisma/client";
 import { User } from "../types/user.type";
 
 export default class OrganizationController extends BaseController {
-  public path = "/organization";
+  public path = "/organization";  
 
   constructor() {
     super();
