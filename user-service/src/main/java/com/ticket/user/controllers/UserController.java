@@ -1,13 +1,17 @@
 package com.ticket.user.controllers;
 
 import com.ticket.user.entities.User;
+import com.ticket.user.repositories.UserRepository;
 import com.ticket.user.services.UserService;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -16,6 +20,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping
     public User findUserByEmail(@RequestParam(value = "email") String email) {
@@ -43,6 +49,18 @@ public class UserController {
         return userService.save(user);
     }
 
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUser()
+    {
+        try {
+            List<User> users = new ArrayList<User>();
+            users = userRepository.findAll();
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            // TODO: handle exception
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 //    @GetMapping
 //    public ResponseTemplateVO getUser(
