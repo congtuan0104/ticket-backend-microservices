@@ -35,7 +35,8 @@ public class AuthenticationFilter implements GatewayFilter {
             "/api/promotion",
             "/api/event",
             "/api/ticket",
-            "/api/mail"
+            "/api/mail",
+            "/api/users"
     );
 
     @Autowired
