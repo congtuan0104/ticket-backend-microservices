@@ -180,6 +180,7 @@ public class EventController {
         _event.setEventCategoryId(inputEvent.getEventCategoryId());
         _event.setCityId(inputEvent.getCityId());
         _event.setEndTime(inputEvent.getEndTime());
+        _event.setStartTime(inputEvent.getStartTime());
         _event.setEventAddress(inputEvent.getEventAddress());
         _event.setBasePrice(inputEvent.getBasePrice());
         _event.setEventDescription(inputEvent.getEventDescription());

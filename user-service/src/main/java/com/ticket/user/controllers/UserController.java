@@ -49,7 +49,7 @@ public class UserController {
         return userService.save(user);
     }
 
-    @GetMapping
+    @GetMapping(value = "/getAll")
     public ResponseEntity<List<User>> getAllUser()
     {
         try {
